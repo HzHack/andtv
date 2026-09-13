@@ -6,428 +6,431 @@
     <title>مكتبة برامج Android TV | تطوير أبو عساف</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Chakra+Petch:wght@700&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #0d1117;          /* رمادي ليلي غامق ومريح */
-            --surface: #161b22;          /* كروت وقوائم */
-            --surface-hover: #1c2128;
-            --surface-subtle: #21262d;
-            --border-color: #30363d;     /* حدود ناعمة بدون تباين مزعج */
-            --text-main: #e6edf3;        /* أبيض هادئ للقراءة */
-            --text-muted: #8b949e;       /* نصوص فرعية */
-            --accent-gold: #e3b341;      /* لمسة ذهبية أنيقة */
-            --accent-blue: #2f81f7;      /* أزرق هادئ للتحميل */
-            --accent-blue-hover: #1f6feb;
+            --tv-bg: #07090e;
+            --tv-card: #101522;
+            --tv-card-focus: #182032;
+            --tv-border: rgba(255, 255, 255, 0.08);
+            --tv-focus-border: #00f0ff;
+            --tv-accent: #e9b44c;
+            --tv-cyan: #00f0ff;
+            --tv-text: #f8fafc;
+            --tv-muted: #94a3b8;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            padding: 30px 20px;
-            line-height: 1.7;
-        }
-
-        .wrapper {
-            max-width: 1240px;
-            margin: 0 auto;
-        }
-
-        /* الهيدر العلوي */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            background: var(--surface);
-            padding: 20px 30px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header h1 span {
-            background: var(--surface-subtle);
-            color: var(--accent-gold);
-            font-size: 13px;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            border: 1px solid rgba(227, 179, 65, 0.3);
-        }
-
-        .header .developer-tag {
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 14px;
-            background: var(--surface-subtle);
-            padding: 6px 18px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-        }
-
-        .header .developer-tag strong {
-            color: var(--text-main);
-        }
-
-        /* رسالة المقدمة */
-        .intro {
-            background: var(--surface);
-            padding: 18px 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            border-right: 5px solid var(--accent-gold);
-            margin-bottom: 25px;
-        }
-
-        .intro p {
-            font-size: 15px;
-            color: #c9d1d9;
-        }
-
-        /* أدوات البحث والفلترة */
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--surface);
-            padding: 16px 24px;
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 25px;
-        }
-
-        .search-box input {
-            padding: 10px 18px;
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            font-family: inherit;
-            font-size: 14px;
-            width: 280px;
-            background: var(--bg-body);
-            color: var(--text-main);
-            transition: 0.2s;
             outline: none;
         }
 
-        .search-box input:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(47, 129, 247, 0.15);
+        body {
+            background-color: var(--tv-bg);
+            color: var(--tv-text);
+            font-family: 'Tajawal', sans-serif;
+            min-height: 100vh;
+            padding: 40px 60px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(233, 180, 76, 0.04) 0%, transparent 40%);
+            background-attachment: fixed;
         }
 
-        .filter-group {
+        /* Top TV HUD Bar */
+        .tv-topbar {
             display: flex;
-            gap: 8px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--tv-border);
+        }
+
+        .tv-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tv-brand-badge {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 13px;
+            background: rgba(0, 240, 255, 0.12);
+            color: var(--tv-cyan);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .tv-brand h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .tv-dev-tag {
+            font-size: 16px;
+            color: var(--tv-muted);
+            background: var(--tv-card);
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: 1px solid var(--tv-border);
+        }
+
+        .tv-dev-tag strong {
+            color: var(--tv-accent);
+        }
+
+        /* Search & TV D-Pad Friendly Filters */
+        .tv-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
         }
 
-        .filter-btn {
-            padding: 6px 20px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-            background: transparent;
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 420px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--tv-card);
+            border: 2px solid var(--tv-border);
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 14px;
             font-family: inherit;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--tv-focus-border);
+            background: var(--tv-card-focus);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .tv-btn {
+            background: var(--tv-card);
+            border: 2px solid var(--tv-border);
+            color: var(--tv-muted);
+            font-family: inherit;
+            font-size: 16px;
             font-weight: 700;
-            font-size: 14px;
-            color: var(--text-muted);
+            padding: 12px 28px;
+            border-radius: 14px;
             cursor: pointer;
-            transition: 0.15s;
+            transition: all 0.2s ease;
         }
 
-        .filter-btn:hover {
-            background: var(--surface-subtle);
-            color: var(--text-main);
+        .tv-btn:hover,
+        .tv-btn:focus,
+        .tv-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: scale(1.04);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        .filter-btn.active {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            color: #fff;
-        }
-
-        .stats {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
-            padding: 0 4px 14px 4px;
-        }
-
-        .stats strong {
-            color: var(--accent-gold);
-            font-size: 17px;
-        }
-
-        /* شبكة الكروت */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--surface);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            background: var(--surface-hover);
-            border-color: #484f58;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-top {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 16px;
-        }
-
-        .icon-wrapper {
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
-            overflow: hidden;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--surface-subtle);
-            border: 1px solid var(--border-color);
-        }
-
-        .icon-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .icon-fallback {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 15px;
-            color: #fff;
-        }
-
-        .card-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        /* صندوق الكود */
-        .code-block {
-            background: var(--bg-body);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            transition: 0.15s;
-            direction: ltr;
-        }
-
-        .code-block:hover {
-            border-color: #484f58;
-        }
-
-        .code-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .code-value {
-            font-family: 'Courier New', monospace;
-            font-size: 21px;
-            font-weight: 800;
-            color: var(--accent-gold);
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            padding: 2px 10px;
-            border-radius: 6px;
-            transition: 0.15s;
-            user-select: all;
-        }
-
-        .code-value:hover {
-            background: var(--surface-subtle);
-        }
-
-        .code-value.copied {
-            background: var(--accent-gold);
+        .tv-btn.active:focus {
+            box-shadow: 0 0 25px var(--tv-focus-border);
+            border-color: var(--tv-focus-border);
+            background: var(--tv-cyan);
             color: #000;
         }
 
-        .card-footer {
+        /* High-Visibility 10ft Grid */
+        .tv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 26px;
+            margin-bottom: 50px;
+        }
+
+        .tv-card {
+            background: linear-gradient(180deg, var(--tv-card) 0%, #0c101a 100%);
+            border: 2px solid var(--tv-border);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        /* Remote control focus indicator */
+        .tv-card:focus-within,
+        .tv-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--tv-focus-border);
+            background: linear-gradient(180deg, var(--tv-card-focus) 0%, #111726 100%);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.25);
+            z-index: 10;
+        }
+
+        .card-head {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid var(--border-color);
-            padding-top: 14px;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .app-icon-box {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--tv-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+        }
+
+        .app-icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-icon-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        .app-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app-cat {
+            font-size: 13px;
+            color: var(--tv-accent);
+            font-weight: 700;
             margin-top: 4px;
         }
 
-        .category {
+        /* Large TV Downloader Code Display */
+        .code-display {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid var(--tv-border);
+            border-radius: 14px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            direction: ltr;
+        }
+
+        .code-title {
+            font-family: 'Chakra Petch', sans-serif;
             font-size: 12px;
-            font-weight: 600;
-            background: var(--surface-subtle);
-            color: var(--text-muted);
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-download {
-            background: var(--surface-subtle);
-            color: var(--text-main);
-            padding: 7px 18px;
-            border-radius: 30px;
-            text-decoration: none;
+            letter-spacing: 1px;
+            color: var(--tv-muted);
             font-weight: 700;
-            font-size: 13px;
-            border: 1px solid var(--border-color);
-            transition: 0.2s;
-            cursor: pointer;
-            display: inline-block;
         }
 
-        .btn-download:hover {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(47, 129, 247, 0.25);
+        .code-number {
+            font-family: 'Chakra Petch', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--tv-cyan);
+            letter-spacing: 2px;
+            text-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
         }
 
-        /* الفوتر وحفظ الحقوق */
-        .footer {
-            margin-top: 50px;
-            padding: 25px 30px;
-            background: var(--surface);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
+        /* Action Buttons for Remote */
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--tv-border);
+            color: var(--tv-text);
+            padding: 12px 0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
             text-align: center;
-            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:focus,
+        .action-btn:hover {
+            background: var(--tv-focus-border);
+            color: #000;
+            border-color: var(--tv-focus-border);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transform: scale(1.03);
+        }
+
+        .action-btn.btn-dl:focus,
+        .action-btn.btn-dl:hover {
+            background: var(--tv-accent);
+            border-color: var(--tv-accent);
+            box-shadow: 0 0 20px rgba(233, 180, 76, 0.4);
+            color: #000;
+        }
+
+        /* TV Remote Hints */
+        .remote-bar {
+            background: var(--tv-card);
+            border: 1px solid var(--tv-border);
+            border-radius: 16px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--tv-muted);
             font-size: 14px;
         }
 
-        .footer strong {
-            color: var(--accent-gold);
-            font-weight: 700;
+        .remote-hints {
+            display: flex;
+            gap: 20px;
         }
 
-        .footer .sub-rights {
-            margin-top: 6px;
+        .hint-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .key-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 6px;
             font-size: 12px;
-            color: #6e7681;
+            font-family: monospace;
         }
 
-        /* إشعار النسخ (Toast) */
-        .toast {
+        /* Toast */
+        .tv-toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--surface-hover);
-            color: var(--text-main);
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: translateX(-50%) translateY(30px);
+            background: #000;
+            border: 2px solid var(--tv-cyan);
+            color: #fff;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 800;
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.5);
             opacity: 0;
             visibility: hidden;
             transition: all 0.25s ease;
-            z-index: 999;
-            border: 1px solid var(--accent-gold);
+            z-index: 1000;
         }
 
-        .toast.show {
+        .tv-toast.show {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
         }
 
-        @media (max-width: 640px) {
-            .header { flex-direction: column; align-items: stretch; text-align: center; }
-            .controls { flex-direction: column; align-items: stretch; }
-            .search-box input { width: 100%; }
-            .filter-group { justify-content: center; }
-            .grid { grid-template-columns: 1fr; }
+        @media (max-width: 800px) {
+            body { padding: 24px 16px; }
+            .tv-topbar { flex-direction: column; align-items: stretch; text-align: center; }
+            .tv-brand { justify-content: center; }
+            .search-box { max-width: 100%; }
+            .tv-grid { grid-template-columns: 1fr; }
+            .remote-bar { flex-direction: column; gap: 10px; text-align: center; }
         }
     </style>
 </head>
 <body>
-<div class="wrapper">
 
-    <div class="header">
-        <h1>📺 شاشتي <span>Downloader Hub</span></h1>
-        <div class="developer-tag">تطوير وإعداد: <strong>أبو عساف</strong></div>
-    </div>
+    <!-- TV Top Bar -->
+    <header class="tv-topbar">
+        <div class="tv-brand">
+            <span class="tv-brand-badge">TV EDITION</span>
+            <h1>شاشتي Downloader Hub</h1>
+        </div>
+        <div class="tv-dev-tag">
+            إعداد وتطوير: <strong>أبو عساف</strong>
+        </div>
+    </header>
 
-    <div class="intro">
-        <p>👋 مكتبة تطبيقات التلفزيون الذكي وأجهزة Android TV. اضغط على الكود لنسخه مباشرة للشاشة، أو اضغط زر التحميل للتحميل الفوري للـ APK.</p>
-    </div>
-
-    <div class="controls">
+    <!-- TV Remote Controls & Filters -->
+    <div class="tv-nav">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ابحث باسم التطبيق أو رقم الكود...">
+            <input type="text" id="searchInput" placeholder="ابحث باسم التطبيق أو الكود..." tabindex="1">
         </div>
-        <div class="filter-group" id="filterGroup">
-            <button class="filter-btn active" data-filter="all">الكل</button>
-            <button class="filter-btn" data-filter="بث وميديا">بث وميديا</button>
-            <button class="filter-btn" data-filter="رياضة">رياضة</button>
+        <div class="filter-row">
+            <button class="tv-btn active" data-filter="all" tabindex="2">الكل</button>
+            <button class="tv-btn" data-filter="بث وميديا" tabindex="3">بث وميديا</button>
+            <button class="tv-btn" data-filter="رياضة" tabindex="4">رياضة</button>
         </div>
     </div>
 
-    <div class="stats">عدد التطبيقات المتاحة: <strong id="countDisplay">0</strong></div>
+    <!-- App Grid -->
+    <main class="tv-grid" id="appsGrid"></main>
 
-    <div class="grid" id="appsGrid"></div>
+    <!-- TV Remote Control Footer Guide -->
+    <footer class="remote-bar">
+        <div class="remote-hints">
+            <div class="hint-item"><span class="key-badge">▲ ▼ ◄ ►</span> التنقل بالريموت</div>
+            <div class="hint-item"><span class="key-badge">OK</span> تحديد / نسخ</div>
+        </div>
+        <div>جميع الحقوق محفوظة &copy; 2026 — <strong>أبو عساف</strong></div>
+    </footer>
 
-    <div class="footer">
-        جميع الحقوق محفوظة &copy; 2026 — تم البرمجة والتجميع بواسطة <strong>أبو عساف</strong>
-        <div class="sub-rights">مخصص لأجهزة Android TV والشاشات الذكية | تحديث دوري للأكواد والروابط</div>
-    </div>
-</div>
-
-<div class="toast" id="toast">✅ تم نسخ الكود بنجاح</div>
+    <!-- TV Large Toast -->
+    <div class="tv-toast" id="toast">✅ تم نسخ الكود للشاشة</div>
 
 <script>
     const apps = [
-        { name: 'dukket TV', icon: 'DUK', img: 'icons/dukket TV.png', code: '9260213', category: 'بث وميديا', color: '#1f2937' },
+        { name: 'dukket TV', icon: 'DUK', img: 'icons/dukket TV.png', code: '9260213', category: 'بث وميديا', color: '#1e293b' },
         { name: 'FalconTV', icon: 'FLC', img: 'icons/FalconTV.png', code: '2571211', category: 'بث وميديا', color: '#854d0e' },
         { name: 'FLAW TV', icon: 'FLW', img: 'icons/FLAW TV.png', code: '2254595', category: 'بث وميديا', color: '#581c87' },
         { name: 'GeeSport', icon: 'GEE', img: 'icons/GeeSport.png', code: '7626034', category: 'رياضة', color: '#14532d' },
@@ -444,18 +447,12 @@
 
     const grid = document.getElementById('appsGrid');
     const searchInput = document.getElementById('searchInput');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const countDisplay = document.getElementById('countDisplay');
+    const filterBtns = document.querySelectorAll('.tv-btn');
     const toast = document.getElementById('toast');
 
     let currentFilter = 'all';
     let searchText = '';
     let toastTimer = null;
-
-    function downloadApp(code) {
-        const targetUrl = 'https://go.aftvnews.com/' + code;
-        window.open(targetUrl, '_blank', 'noopener,noreferrer');
-    }
 
     function render() {
         const filtered = apps.filter(app => {
@@ -464,80 +461,77 @@
             return matchCat && matchSearch;
         });
 
-        countDisplay.textContent = filtered.length;
+        let tabCounter = 10;
 
         grid.innerHTML = filtered.map(app => {
+            const copyTab = tabCounter++;
+            const dlTab = tabCounter++;
             const iconHtml = app.img ? 
-                `<img src="${app.img}" alt="${app.name}" onerror="this.outerHTML='<div class=\\'icon-fallback\\' style=\\'background:${app.color}\\'>${app.icon}</div>'">` : 
-                `<div class="icon-fallback" style="background:${app.color}">${app.icon}</div>`;
+                `<img src="${app.img}" alt="${app.name}" onerror="this.outerHTML='<div class=\\'app-icon-fallback\\' style=\\'background:${app.color}\\'>${app.icon}</div>'">` : 
+                `<div class="app-icon-fallback" style="background:${app.color}">${app.icon}</div>`;
 
             return `
-            <div class="card">
-                <div class="card-top">
-                    <div class="icon-wrapper">
-                        ${iconHtml}
+            <div class="tv-card">
+                <div>
+                    <div class="card-head">
+                        <div class="app-icon-box">
+                            ${iconHtml}
+                        </div>
+                        <div class="app-info">
+                            <div class="app-title">${app.name}</div>
+                            <div class="app-cat">${app.category}</div>
+                        </div>
                     </div>
-                    <div class="card-title">${app.name}</div>
+
+                    <div class="code-display">
+                        <span class="code-title">DOWNLOADER</span>
+                        <span class="code-number">${app.code}</span>
+                    </div>
                 </div>
-                <div class="code-block">
-                    <span class="code-label">CODE</span>
-                    <span class="code-value" data-code="${app.code}">${app.code}</span>
-                </div>
-                <div class="card-footer">
-                    <span class="category">${app.category}</span>
-                    <a href="https://go.aftvnews.com/${app.code}" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="btn-download" 
-                       onclick="downloadApp('${app.code}')">تحميل APK</a>
+
+                <div class="card-actions">
+                    <button class="action-btn" data-code="${app.code}" tabindex="${copyTab}">
+                        نسخ الكود
+                    </button>
+                    <a href="https://go.aftvnews.com/${app.code}" target="_blank" rel="noopener noreferrer" class="action-btn btn-dl" tabindex="${dlTab}">
+                        فتح الرابط
+                    </a>
                 </div>
             </div>
             `;
         }).join('');
 
-        document.querySelectorAll('.code-value').forEach(el => {
-            el.onclick = function() {
+        document.querySelectorAll('.action-btn[data-code]').forEach(btn => {
+            btn.onclick = function() {
                 const code = this.dataset.code;
-                if (navigator.clipboard && window.isSecureContext) {
-                    navigator.clipboard.writeText(code).then(() => {
-                        triggerCopyVisual(this, code);
-                    }).catch(() => fallbackCopy(this, code));
-                } else {
-                    fallbackCopy(this, code);
-                }
+                copyCode(code);
             };
         });
     }
 
-    function triggerCopyVisual(element, code) {
-        element.classList.add('copied');
-        setTimeout(() => element.classList.remove('copied'), 500);
-        showToast('✅ تم نسخ الكود: ' + code);
-    }
-
-    function fallbackCopy(element, code) {
-        const temp = document.createElement('input');
-        temp.value = code;
-        document.body.appendChild(temp);
-        temp.select();
-        try {
+    function copyCode(code) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(code).then(() => showToast(code));
+        } else {
+            const temp = document.createElement('input');
+            temp.value = code;
+            document.body.appendChild(temp);
+            temp.select();
             document.execCommand('copy');
-            triggerCopyVisual(element, code);
-        } catch (err) {
-            showToast('⚠️ تعذر النسخ التلقائي');
+            document.body.removeChild(temp);
+            showToast(code);
         }
-        document.body.removeChild(temp);
     }
 
-    function showToast(msg) {
-        toast.textContent = msg;
+    function showToast(code) {
+        toast.textContent = '✅ تم نسخ الكود: ' + code;
         toast.classList.add('show');
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
-    searchInput.addEventListener('input', function() {
-        searchText = this.value.trim().toLowerCase();
+    searchInput.addEventListener('input', (e) => {
+        searchText = e.target.value.trim().toLowerCase();
         render();
     });
 

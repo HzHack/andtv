@@ -430,6 +430,7 @@
 
 <script>
     const apps = [
+        { name: 'دراما لايف (Drama Live)', icon: 'DLV', img: 'icons/Drama Live.png', code: '3743840', customUrl: 'https://aftv.news/3743840', category: 'بث وميديا', color: '#c026d3' },
         { name: 'dukket TV', icon: 'DUK', img: 'icons/dukket TV.png', code: '9260213', category: 'بث وميديا', color: '#1e293b' },
         { name: 'FalconTV', icon: 'FLC', img: 'icons/FalconTV.png', code: '2571211', category: 'بث وميديا', color: '#854d0e' },
         { name: 'FLAW TV', icon: 'FLW', img: 'icons/FLAW TV.png', code: '2254595', category: 'بث وميديا', color: '#581c87' },
@@ -466,6 +467,7 @@
         grid.innerHTML = filtered.map(app => {
             const copyTab = tabCounter++;
             const dlTab = tabCounter++;
+            const targetUrl = app.customUrl || `https://go.aftvnews.com/${app.code}`;
             const iconHtml = app.img ? 
                 `<img src="${app.img}" alt="${app.name}" onerror="this.outerHTML='<div class=\\'app-icon-fallback\\' style=\\'background:${app.color}\\'>${app.icon}</div>'">` : 
                 `<div class="app-icon-fallback" style="background:${app.color}">${app.icon}</div>`;
@@ -493,7 +495,7 @@
                     <button class="action-btn" data-code="${app.code}" tabindex="${copyTab}">
                         نسخ الكود
                     </button>
-                    <a href="https://go.aftvnews.com/${app.code}" target="_blank" rel="noopener noreferrer" class="action-btn btn-dl" tabindex="${dlTab}">
+                    <a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="action-btn btn-dl" tabindex="${dlTab}">
                         فتح الرابط
                     </a>
                 </div>

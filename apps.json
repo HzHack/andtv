@@ -120,15 +120,5 @@
     "code": "7045861",
     "category": "بث وميديا",
     "color": "#172554"
-  },
-  {
-    "name": "Mbox",
-    "icon": "MBOX",
-    "img": "icons/1000259102.png",
-    "apk": "MovieBoxTV_v1.1.9.0820.03.apk",
-    "category": "بث وميديا",
-    "color": "#1e293b",
-    "url": "https://raw.githubusercontent.com/HzHack/andtv/main/apks/MovieBoxTV_v1.1.9.0820.03.apk",
-    "code": "1232675"
   }
 ]
